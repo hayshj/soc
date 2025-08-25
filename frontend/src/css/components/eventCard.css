@@ -1,0 +1,101 @@
+#eventCard{
+    height: auto;
+    width: 100%;
+    padding: 2rem;
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+#eventCardInfo{
+    height: auto;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    text-align: left;
+    gap: 1rem;
+}
+
+#eventDetails{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+#eventCardButtonContainer{
+    height: 20vh;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content: center;
+}
+
+#eventCardButton{
+    width: 80%;
+    height: 5rem;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f59520;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 0.5rem 0;
+}
+
+#eventCard h1{
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0;
+    text-align: left;
+}
+
+#eventCard p{
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin: 0;
+    text-align: left;
+}
+
+@media screen and (max-width: 1000px) {
+    #eventCard {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #eventCardInfo, #eventCardButtonContainer {
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    #eventCard h1 {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    #eventCard p {
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    #eventCardButton {
+        width: 60%;
+        height: auto;
+        font-size: 1rem;
+        padding: 1rem;
+    }
+}

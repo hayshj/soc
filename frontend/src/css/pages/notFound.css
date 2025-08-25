@@ -1,0 +1,25 @@
+#notFound{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh -12vh);
+    margin-top: 12vh;
+}
+
+h1{
+    font-size: 5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    margin-top: 0;
+}
+
+#backToHome{
+    font-size: 1.5rem;
+    color: #f59520;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: 2px solid #f59520;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}

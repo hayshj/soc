@@ -1,0 +1,102 @@
+#navbar{
+    height: 12vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #333;
+    z-index: 1;
+}
+
+#logo{
+    position: relative;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 8vh;
+    width: 8vh;
+    margin-left: 2vw;
+}
+
+#navLinks{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2vw;
+    margin-right: 2vw;
+    width: fit-content;
+}
+
+#navMenu{
+    display: none;
+}
+
+#navLinks ul{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 2vw;
+}
+
+.link{
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-weight: 600;
+}
+
+.navIcon{
+    display: none; /* Hide the hamburger menu by default */
+    width: 8vh;
+    height: 8vh;
+    color: white;
+    margin-right: 2vw;
+}
+
+.active{
+    color: #f59520;
+}
+
+@media screen and (max-width: 1000px) {
+
+    #navLinks {
+        display: none; /* Hide the menu on smaller screens */
+    }
+    
+    .navIcon {
+        display: block; /* Show the hamburger menu on smaller screens */
+    }
+
+    #navMenu{
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        position: absolute;
+        top: 12vh; /* Below the navbar */
+        left: 0;
+        height: calc(100vh - 12vh);
+        width: 100%;
+        background-color: black;
+        padding: 1em;
+        gap: 1em;
+        display: flex;
+        transform: translateX(100%); /* Initially hidden */
+        transition: transform 0.5s ease;
+        z-index: 1000;
+    }
+
+    #navMenu.open{
+        transform: translateX(0);
+    }
+}
