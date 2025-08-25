@@ -1,13 +1,13 @@
 import '../css/style.css';
 import '../css/pages/adminLogin.css';
 import Navbar from '../components/Navbar';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function AdminLogin() {
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    //const [email, setEmail] = useState('');
+    //const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ function AdminLogin() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, password }),
+                //body: JSON.stringify({ email, password }),
             });
 
             if (!response.ok) {
