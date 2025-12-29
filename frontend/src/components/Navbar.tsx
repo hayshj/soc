@@ -80,7 +80,7 @@ function Navbar() {
           Events
         </Link>
         <a
-          href="https://www.sightsonchrist.smugmug.com"
+          href="https://sightsonchrist.smugmug.com"
           className="link"
           target="_blank"
           rel="noreferrer"
@@ -123,7 +123,7 @@ function Navbar() {
           </li>
           <li>
             <a
-              href="https://www.sightsonchrist.smugmug.com"
+              href="https://sightsonchrist.smugmug.com"
               className="link"
               target="_blank"
               rel="noreferrer"
