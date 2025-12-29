@@ -61,21 +61,31 @@ function Donate() {
           <div className="card pay-only">
             <IoCashOutline className="icon" aria-hidden />
             <div className="pay-copy">
-              <p>
-                Give one-time or set up a recurring monthly gift through PayPal.
-              </p>
+              <p>Give one-time or set up a recurring monthly gift through PayPal.</p>
             </div>
-            {/* TODO: replace href with your actual PayPal donate link */}
-            <a
-              className="btn btn-primary"
-              href="https://www.paypal.com/donate?token=SrsivrzNIk9mrPY4v1ovbOzNFbM__5JOU8ThSUHGlCeJR2wmqgv--dl9LTj6i0TvssLsIKcv4Qe0HhDX&locale.x=US"
+
+            {/* Stable PayPal donate submit */}
+            <form
+              action="https://www.paypal.com/cgi-bin/webscr"
+              method="post"
               target="_blank"
               rel="noreferrer"
-              aria-label="Donate via PayPal"
+              className="paypal-form"
             >
-              Donate with PayPal
-            </a>
+              <input type="hidden" name="cmd" value="_donations" />
+              <input type="hidden" name="business" value="sightsonchrist@yahoo.com" />
+              <input type="hidden" name="item_name" value="Sights On Christ" />
+              <input type="hidden" name="item_number" value="47-4104861" />
+              <input type="hidden" name="currency_code" value="USD" />
+              <input type="hidden" name="no_note" value="0" />
+              <input type="hidden" name="lc" value="US" />
+
+              <button type="submit" className="btn btn-primary" aria-label="Donate via PayPal">
+                Donate with PayPal
+              </button>
+            </form>
           </div>
+
         </section>
 
         {/* 501(c)(3) */}
