@@ -24,7 +24,7 @@ connectDB();
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
-const port = process.env.PORT || 8082;
+const port = process.env.PORT || 3002;
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));
 
