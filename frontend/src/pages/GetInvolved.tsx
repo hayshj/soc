@@ -38,30 +38,25 @@ function GetInvolved() {
               <h3>Joe Watkins</h3>
               <p>President</p>
               <a href="mailto:joew@sightsonchrist.com">joew@sightsonchrist.com</a>
-              <p>(555) 123-4567</p>
             </div>
             <div className="contact-card">
               <h3>Michael Rackley</h3>
               <p>Vice President</p>
               <a href="mailto:michaelr@sightsonchrist.com">michaelr@sightsonchrist.com</a>
-              <p>(555) 234-5678</p>
             </div>
             <div className="contact-card">
               <h3>Claire Blakey</h3>
               <p>Treasurer</p>
               <a href="mailto:claireb@sightsonchrist.com">claireb@sightsonchrist.com</a>
-              <p>(555) 345-6789</p>
             </div>
             <div className="contact-card">
               <h3>Kollin Padon</h3>
               <p>Secretary</p>
               <a href="mailto:kollinp@sightsonchrist.com">kollinp@sightsonchrist.com</a>
-              <p>(555) 456-7890</p>
             </div>
             <div className="contact-card">
               <h3>General Inquiries</h3>
               <a href="mailto:info@sightsonchrist.com">info@sightsonchrist.com</a>
-              <p>(555) 567-8901</p>
             </div>
           </div>
         </section>
