@@ -6,6 +6,7 @@ import '../css/pages/events.css';
 import Navbar from '../components/Navbar';
 import PageHeader from '../components/PageHeader';
 import EventCard from '../components/EventCard';
+import { API_BASE_URL } from '../utils/api';
 
 import { useEffect, useMemo, useState } from 'react';
 
@@ -27,7 +28,7 @@ function Events() {
         setLoading(true);
         setErr(null);
         // Same API as Home page
-        const res = await fetch('http://localhost:8082/api/events');
+        const res = await fetch(`${API_BASE_URL}/api/events`);
         if (!res.ok) throw new Error('Failed to load events');
         const data: Event[] = await res.json();
         setEvents(data ?? []);

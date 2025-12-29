@@ -1,6 +1,7 @@
 import '../css/style.css';
 import '../css/pages/adminLogin.css';
 import Navbar from '../components/Navbar';
+import { API_BASE_URL } from '../utils/api';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoEye, IoEyeOff } from 'react-icons/io5';
@@ -18,7 +19,7 @@ function AdminLogin() {
         setError('');
 
         try {
-            const response = await fetch('http://localhost:8082/api/admin/login', {
+            const response = await fetch(`${API_BASE_URL}/api/admin/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

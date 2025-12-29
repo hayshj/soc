@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import '../css/components/InterestForm.css';
+import { API_BASE_URL } from "../utils/api";
 /* ==== Types ==== */
 export interface InterestFormValues {
   name: string;
@@ -119,7 +120,7 @@ export default function InterestForm({ onSuccess }: InterestFormProps) {
 
     setSubmitting(true);
     try {
-      const res = await fetch("http://localhost:8082/api/registration/create", {
+      const res = await fetch(`${API_BASE_URL}/api/registration/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

@@ -1,6 +1,7 @@
 // CSS
 import '../css/style.css';
 import '../css/pages/forum.css';
+import { API_BASE_URL } from '../utils/api';
 
 // Components
 import Navbar from '../components/Navbar';
@@ -29,7 +30,7 @@ function Forum() {
     try {
       setLoading(true);
       setError(null);
-      const res = await fetch('http://localhost:8082/api/forum');
+      const res = await fetch(`${API_BASE_URL}/api/forum`);
       if (!res.ok) throw new Error('Failed to load posts');
       const data: ForumPost[] = await res.json();
       setPosts(data ?? []);
@@ -79,7 +80,7 @@ function Forum() {
     setNotice(null);
 
     try {
-      const res = await fetch('http://localhost:8082/api/forum/create', {
+      const res = await fetch(`${API_BASE_URL}/api/forum/create`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, message }),

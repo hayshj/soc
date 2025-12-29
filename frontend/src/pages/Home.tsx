@@ -6,6 +6,7 @@ import '../css/pages/home.css';
 import Navbar from '../components/Navbar';
 import TestCard from '../components/TestCard';
 import EventCard from '../components/EventCard';
+import { API_BASE_URL } from '../utils/api';
 
 // Dependencies
 import { Link } from 'react-router-dom'
@@ -30,7 +31,7 @@ function Home() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch('http://localhost:8082/api/events');
+        const response = await fetch(`${API_BASE_URL}/api/events`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

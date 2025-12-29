@@ -4,7 +4,7 @@ const router = express.Router();
 const Registration = require('../../models/Registration');
 const adminAuth = require('../../middleware/adminAuth');
 
-router.get('/', (req, res) => {
+router.get('/', adminAuth, (req, res) => {
     Registration.find()
         .then(events => res.json(events))
         .catch(err => res.status(500).json({ message: 'Server error' }));

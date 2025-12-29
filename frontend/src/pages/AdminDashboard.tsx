@@ -1,6 +1,7 @@
 import '../css/style.css';
 import '../css/pages/adminDashboard.css';
 import Navbar from '../components/Navbar';
+import { API_BASE_URL } from '../utils/api';
 import { useEffect, useMemo, useState } from 'react';
 import type { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -153,21 +154,30 @@ function AdminDashboard() {
   }, [filteredRegistrations, peopleSortKey, peopleSortDir]);
 
   const loadEvents = async () => {
-    const res = await fetch('http://localhost:8082/api/events');
+    const res = await fetch(`${API_BASE_URL}/api/events`);
     const data = await res.json();
     setEvents(data ?? []);
   };
 
   const loadPosts = async () => {
-    const res = await fetch('http://localhost:8082/api/forum');
+    const res = await fetch(`${API_BASE_URL}/api/forum`);
     const data = await res.json();
     setPosts(data ?? []);
   };
 
   const loadRegistrations = async () => {
-    const res = await fetch('http://localhost:8082/api/registration');
+    const res = await fetch(`${API_BASE_URL}/api/registration`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const data = await res.json();
     setRegistrations(data ?? []);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('adminToken');
+    navigate('/admin/login');
   };
 
   useEffect(() => {
@@ -178,7 +188,7 @@ function AdminDashboard() {
       }
 
       try {
-        const res = await fetch('http://localhost:8082/api/admin/me', {
+        const res = await fetch(`${API_BASE_URL}/api/admin/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error('Unauthorized');
@@ -268,8 +278,8 @@ function AdminDashboard() {
 
     try {
       const endpoint = eventToEdit
-        ? `http://localhost:8082/api/events/${eventToEdit._id}`
-        : 'http://localhost:8082/api/events/create';
+        ? `${API_BASE_URL}/api/events/${eventToEdit._id}`
+        : `${API_BASE_URL}/api/events/create`;
       const res = await fetch(endpoint, {
         method: eventToEdit ? 'PUT' : 'POST',
         headers: {
@@ -290,7 +300,7 @@ function AdminDashboard() {
   const handleDeleteEvent = async (id: string) => {
     setStatus('');
     try {
-      const res = await fetch(`http://localhost:8082/api/events/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/events/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -306,7 +316,7 @@ function AdminDashboard() {
   const handleDeletePost = async (id: string) => {
     setStatus('');
     try {
-      const res = await fetch(`http://localhost:8082/api/forum/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/forum/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -362,7 +372,7 @@ function AdminDashboard() {
     event.preventDefault();
     if (!registrationToEdit) return;
     try {
-      const res = await fetch(`http://localhost:8082/api/registration/${registrationToEdit._id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/registration/${registrationToEdit._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -381,7 +391,7 @@ function AdminDashboard() {
   const confirmDeleteRegistration = async () => {
     if (!registrationToDelete) return;
     try {
-      const res = await fetch(`http://localhost:8082/api/registration/${registrationToDelete._id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/registration/${registrationToDelete._id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -407,6 +417,13 @@ function AdminDashboard() {
           <div>
             <h1>Admin Dashboard</h1>
           </div>
+          <button
+            type="button"
+            className="btn btn-secondary admin-logout"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
         </header>
 
         {status && <div className="admin-status">{status}</div>}
