@@ -68,7 +68,7 @@ function Donate() {
             {/* TODO: replace href with your actual PayPal donate link */}
             <a
               className="btn btn-primary"
-              href="https://www.paypal.com/donate?token=RNxKjfqZtrGREv1hT8sRbglaqMq9Ivqr7QvmNWx_3siEVRAJhwhUqCzkNaQ7nmyzyCK-cxIoh4UDVA7Z&locale.x=US"
+              href="https://www.paypal.com/donate?token=SrsivrzNIk9mrPY4v1ovbOzNFbM__5JOU8ThSUHGlCeJR2wmqgv--dl9LTj6i0TvssLsIKcv4Qe0HhDX&locale.x=US"
               target="_blank"
               rel="noreferrer"
               aria-label="Donate via PayPal"
