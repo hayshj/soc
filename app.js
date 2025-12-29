@@ -1,6 +1,7 @@
 // app.js
 
 const express = require('express');
+const path = require('path');
 const connectDB = require('./config/db');
 const eventRoutes = require("./routes/api/events");
 const registrationRoutes = require("./routes/api/registration");
