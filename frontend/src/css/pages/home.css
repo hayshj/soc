@@ -27,7 +27,7 @@
   #homeHero {
     min-height: 88vh;              /* 12vh navbar + 88vh hero */
     position: relative;
-    background-image: url('/images/hero.jpg');
+    background-image: url('/images/hero.webp');
     background-size: cover;
     background-position: center bottom;
     display: grid;
