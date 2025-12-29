@@ -14,9 +14,9 @@ import { useMemo, useState, useEffect } from 'react';
 
 // Images
 import Logo from '../assets/images/SOCmainlogo.png';
-import lucasLaster from '../assets/images/testamonials/lucasLaster.jpg';
-import parkerHutton from '../assets/images/testamonials/parkerHutton.jpg';
-import johnRowe from '../assets/images/testamonials/johnRowe.jpg';
+import lucasLaster from '../assets/images/testamonials/lucasLaster.webp';
+import parkerHutton from '../assets/images/testamonials/parkerHutton.webp';
+import johnRowe from '../assets/images/testamonials/johnRowe.webp';
 
 type Event = {
   title: string;
