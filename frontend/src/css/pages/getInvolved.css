@@ -94,8 +94,9 @@
 /* Optional: make email links stand out slightly */
 .contact-card a {
   text-decoration: none;
-  color: var(--primary, #0f766e);
+  color: var(--brand, #f59520);
 }
 .contact-card a:hover {
   text-decoration: underline;
 }
+

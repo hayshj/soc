@@ -50,8 +50,8 @@
   .field input:focus,
   .field select:focus,
   .field textarea:focus {
-    border-color: var(--primary, #0f766e);
-    box-shadow: 0 0 0 3px rgba(15,118,110,0.15);
+    border-color: var(--brand, #f59520);
+    box-shadow: 0 0 0 3px rgba(245,149,32,0.2);
   }
   
   .field--error input,
@@ -76,7 +76,7 @@
   .actions button {
     padding: 10px 16px;
     border-radius: 10px;
-    background: var(--primary, #0f766e);
+    background: var(--brand, #f59520);
     color: #fff;
     font-weight: 700;
     border: none;
@@ -131,10 +131,11 @@
 .interest-modal-actions button {
   padding: 10px 16px;
   border-radius: 10px;
-  background: var(--primary, #0f766e);
+  background: var(--brand, #f59520);
   color: #ffffff;
   font-weight: 700;
   border: none;
   cursor: pointer;
 }
   
+
