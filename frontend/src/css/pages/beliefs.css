@@ -1,0 +1,58 @@
+/* Layout */
+.beliefs-container {
+    width: min(var(--page-width), var(--page-max-width));
+    margin: 0 auto;
+    padding: clamp(6px, 1.5vw, 12px) 0 96px;
+    color: #0f172a;
+}
+
+.section {
+    margin-top: 48px;
+}
+
+.section-header h2 {
+    font-size: clamp(1.5rem, 2.2vw, 2rem);
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    margin: 0 0 4px 0;
+}
+
+.kicker {
+    color: #6b7280;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.beliefs-list {
+    margin: 24px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 14px;
+}
+
+.belief-item {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 18px 20px;
+    border-radius: 18px;
+    background: linear-gradient(90deg, rgba(15, 23, 42, 0.04), rgba(15, 23, 42, 0.01));
+    border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.belief-content h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+.belief-content p {
+    margin: 0;
+    color: #6b7280;
+    line-height: 1.6;
+}
+
+@media (max-width: 560px) {
+    .beliefs-container { padding: clamp(6px, 1.5vw, 12px) 0 80px; }
+}

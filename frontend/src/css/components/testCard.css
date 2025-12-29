@@ -1,79 +1,95 @@
-#testCard {
+:root {
+    --brand: #f59520;
+    --ink: #0f172a;
+    --muted: #6b7280;
+    --ring: rgba(245, 149, 32, 0.25);
+  }
+  
+  #testCard {
     position: relative;
     width: 100%;
-    padding: 2rem;
-    background-color: #1a1a1a;
-    border-radius: 10px;
-    color: white;
     display: flex;
-    flex-grow: 1;
-    flex:1;
-    height: auto;
     flex-direction: column;
-    justify-content: space-between;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    z-index: 0;
-}
-
-#quoteSection {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 1rem;
-}
-
-.quote {
-    font-size: 1.5rem;
-    font-style: italic;
-    line-height: 1.6;
-    color: #ddd;
-    text-align: center;
-    position: relative;
-    padding-left: 1.5rem;
-}
-
-#quoteMark {
-    font-size: 4rem;
+    justify-content: space-between;   /* pushes #userSection to bottom */
+    gap: 16px;
+    padding: clamp(16px, 3vw, 24px);
+    background: linear-gradient(180deg, rgba(245,149,32,0.07), rgba(245,149,32,0.03));
+    color: var(--ink);
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(17, 24, 39, 0.08);
+    transition: transform .2s ease, box-shadow .25s ease, border-color .25s ease;
+    min-height: 320px; /* ensures consistent height */
+  }
+  
+  /* Decorative quotation mark */
+  #quoteMark {
     position: absolute;
-    left: 1.5rem;
-    top: 1.5rem;
-    color: #f59520;
-}
-
-#userSection {
+    top: 12px;
+    left: 14px;
+    font-size: 40px;
+    line-height: 1;
+    color: var(--brand);
+    opacity: .25;
+    pointer-events: none;
+  }
+  
+  /* Quote text */
+  #quoteSection {
+    flex-grow: 1; /* allows this area to expand */
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
-    margin-top: 2rem;
-}
-
-.profileImage {
-    width: 70px;
-    height: 70px;
+    padding: 0 6px;
+  }
+  
+  .quote {
+    margin: 0;
+    font-size: clamp(1rem, 1.9vw, 1.15rem);
+    line-height: 1.65;
+    color: var(--ink);
+    text-align: center;
+    font-weight: 500;
+  }
+  
+  /* User block (always at bottom) */
+  #userSection {
+    margin-top: auto;   /* anchors section at the bottom */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(15,23,42,0.06);
+  }
+  
+  .profileImage {
+    width: 58px;
+    height: 58px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #333;
-}
-
-.userInfo {
+    border: 2px solid rgba(245,149,32,0.35);
+    box-shadow: 0 4px 12px rgba(17,24,39,.10);
+  }
+  
+  .userInfo {
     display: flex;
     flex-direction: column;
-    align-items: start;
-}
-
-.userName {
-    font-weight: 600;
-    font-size: 1.2rem;
-}
-
-@media screen and (max-width: 500px) {
-    #testCard {
-        padding: 1.5rem;
-    }
-
-    #quoteSection .quote {
-        font-size: 1rem;
-    }
-}
+    align-items: flex-start;
+  }
+  
+  .userName {
+    margin: 0;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: .2px;
+    color: var(--ink);
+  }
+  
+  /* Responsive */
+  @media (max-width: 560px) {
+    #testCard { padding: 16px; min-height: auto; }
+    .quote { font-size: 1rem; }
+    .profileImage { width: 54px; height: 54px; }
+  }
+  

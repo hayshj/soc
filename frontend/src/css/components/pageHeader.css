@@ -1,0 +1,61 @@
+/* pageHeader.css */
+
+#pageHeader {
+    width: 100%;
+    margin-top: 12vh;
+    padding: 4rem 1rem; /* increased vertical padding */
+    background: linear-gradient(135deg, #f97316, #facc15); /* Orange → Amber gradient */
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative radial glow */
+#pageHeader::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.15), transparent 70%);
+    transform: rotate(25deg);
+    z-index: 0;
+}
+
+#pageHeader h1 {
+    position: relative;
+    font-size: clamp(1.8rem, 5vw, 3.5rem); /* made slightly bigger */
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin: 0;
+    z-index: 1;
+    color: #fff;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    #pageHeader {
+        padding: 3rem 1rem; /* still taller than before */
+    }
+
+    #pageHeader h1 {
+        font-size: clamp(1.4rem, 5vw, 2.5rem);
+        letter-spacing: 1px;
+    }
+}
+
+@media (max-width: 480px) {
+    #pageHeader {
+        padding: 2.5rem 0.5rem; /* keeps extra height on mobile */
+    }
+
+    #pageHeader h1 {
+        font-size: clamp(1.2rem, 6vw, 2rem);
+        letter-spacing: 0.5px;
+    }
+}

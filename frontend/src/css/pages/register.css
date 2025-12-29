@@ -1,0 +1,106 @@
+/* ============================= */
+/* Register Page Styles          */
+/* ============================= */
+
+#registerPage {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #000; /* black background */
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    box-sizing: border-box;
+    margin-top: 12vh;
+  }
+  
+  #registerPage h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  #registerForm {
+    width: min(var(--page-width), var(--page-max-width));
+    max-width: var(--page-max-width);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    /* Removed background + box styles */
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0 auto;
+  }
+  
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .formGroup label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ddd;
+    font-family: inherit; /* matches site font */
+  }
+  
+  .formGroup input,
+  .formGroup textarea {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #1a1a1a; /* dark gray background */
+    color: #fff; /* white text */
+    font-family: inherit; /* keep consistent font */
+  }
+  
+  .formGroup input::placeholder,
+  .formGroup textarea::placeholder {
+    color: #aaa; /* lighter gray for placeholder text */
+  }
+  
+  .formGroup input:focus,
+  .formGroup textarea:focus {
+    outline: 2px solid #f59520; /* orange accent on focus */
+  }
+  
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  /* Button Styles */
+  #registerForm button {
+    background-color: #f59520;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: inherit;
+  }
+  
+  #registerForm button:hover {
+    background-color: #e08f1c;
+  }
+  
+  /* ============================= */
+  /* Responsive Adjustments        */
+  /* ============================= */
+  
+  @media screen and (max-width: 768px) {
+    #registerPage h1 {
+      font-size: 2rem;
+    }
+  }
+  

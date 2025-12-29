@@ -9,7 +9,7 @@ import EventCard from '../components/EventCard';
 
 // Dependencies
 import { Link } from 'react-router-dom'
-import { useState, useEffect } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 
 // Images
 import Logo from '../assets/images/SOCmainlogo.png';
@@ -44,6 +44,26 @@ function Home() {
     fetchEvents();
   }, []);
 
+  const sortedEvents = useMemo(() => {
+    const today = new Date();
+    const startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
+    return [...events].filter((event) => {
+      const time = new Date(event.date).getTime();
+      if (isNaN(time)) return true;
+      return time >= startOfToday;
+    }).sort((a, b) => {
+      const aTime = new Date(a.date).getTime();
+      const bTime = new Date(b.date).getTime();
+      const aUpcoming = isNaN(aTime) ? true : aTime >= startOfToday;
+      const bUpcoming = isNaN(bTime) ? true : bTime >= startOfToday;
+      if (aUpcoming !== bUpcoming) return aUpcoming ? -1 : 1;
+      if (isNaN(aTime) && isNaN(bTime)) return 0;
+      if (isNaN(aTime)) return 1;
+      if (isNaN(bTime)) return -1;
+      return aTime - bTime;
+    });
+  }, [events]);
+
   return (
     <>
       <div id="bg-gradient"></div>
@@ -59,8 +79,8 @@ function Home() {
                   />
                 </div>
                 <div id="ctab">
-                    <Link to="#" className="btn btn-primary">Get Involved</Link>
-                    <Link to="#" className="btn btn-secondary">Donate</Link>
+                    <Link to="/get-involved" className="btn btn-primary">Get Involved</Link>
+                    <Link to="donate" className="btn btn-secondary">Donate</Link>
                 </div>
             </div>
         </div>
@@ -68,9 +88,16 @@ function Home() {
         {/* Body */}
         <div id='homeBody'>
 
-          <div id='missionStatementSection'>
-            <h1 className='sectionHeader'>Our Mission</h1>
-            <p id='missionStatement'>To impact youth lives, by spreading the gospel, while experiencing the great outdoors.</p>
+          <div id="events">
+            <h1 className='sectionHeader'>Upcoming Events</h1>
+            {sortedEvents.map((event, index) => (
+              <EventCard
+                key={index}
+                title={event.title}
+                date={event.date}
+                location={event.location}
+              />
+            ))}
           </div>
 
           <div id='testimonials'>
@@ -91,18 +118,6 @@ function Home() {
                 name="John Rowe"
               />
             </div>
-          </div>
-
-          <div id="events">
-            <h1 className='sectionHeader'>Upcoming Events</h1>
-            {events.map((event, index) => (
-              <EventCard
-                key={index}
-                title={event.title}
-                date={event.date}
-                location={event.location}
-              />
-            ))}
           </div>
 
           <div id="videoHighlight">

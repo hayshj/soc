@@ -1,21 +1,21 @@
-#notFound{
+.not-found-content{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: calc(100vh -12vh);
-    margin-top: 12vh;
+    padding: 0 16px;
+    text-align: center;
 }
 
-h1{
-    font-size: 5rem;
+.not-found-content h1{
+    font-size: clamp(2.5rem, 8vw, 5rem);
     font-weight: 700;
     margin-bottom: 1rem;
     margin-top: 0;
 }
 
 #backToHome{
-    font-size: 1.5rem;
+    font-size: clamp(1rem, 4vw, 1.5rem);
     color: #f59520;
     text-decoration: none;
     padding: 0.5rem 1rem;

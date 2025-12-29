@@ -1,173 +1,232 @@
-#homeHero{
+/* =========================
+   Home Page — modern theme
+   Matches About page styling
+   ========================= */
+
+   :root {
+    --brand: #f59520;
+    --bg: #ffffff;
+    --ink: #0f172a;
+    --muted: #6b7280;
+    --surface: #ffffff;
+    --ring: rgba(245, 149, 32, 0.25);
+  }
+  
+  /* Subtle background gradient (optional) */
+  #bg-gradient {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 40% at 10% 10%, rgba(245,149,32,0.08), transparent 60%),
+      radial-gradient(60% 45% at 90% 15%, rgba(245,149,32,0.06), transparent 65%);
+    z-index: -1;
+  }
+  
+  /* ===== Hero ===== */
+  #homeHero {
+    min-height: 88vh;              /* 12vh navbar + 88vh hero */
+    position: relative;
     background-image: url('/images/hero.jpg');
     background-size: cover;
     background-position: center bottom;
-}
-
-#homeHeroContent{
+    display: grid;
+    place-items: center;
+    color: #fff;
+    overflow: hidden;
+  }
+  
+  /* Soft dark overlay for readability */
+  #homeHero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.35) 30%, rgba(0,0,0,.25));
+    z-index: 0;
+  }
+  
+  #homeHeroContent {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    width: 100%;
-    gap: 5vh;
-    background-color: rgb(0, 0, 0, 0.3);
-}
-
-#homeHeroLogo {
-    width: 85vw;
-    max-width: 600px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    gap: clamp(20px, 5vh, 48px);
+    width: min(var(--page-width), var(--page-max-width));
+    margin: 0 auto;
+    padding: 0;
+  }
   
-#homeHeroLogo img {
-    width: 100%;
-    height: auto;
-}
-
-#ctab {
+  #homeHeroLogo {
+    width: min(85vw, 620px);
+    display: grid;
+    place-items: center;
+  }
+  #homeHeroLogo img { width: 100%; height: auto; }
+  
+  /* CTA buttons */
+  #ctab {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-    gap: 2vw;
-    width: 90%;
-    max-width: 600px;
-}
-
-.btn {
-    padding: 1em 2em; /* Adds internal spacing */
-    font-size: 1.2rem;
-    font-weight: 600;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 6px;
-    white-space: nowrap; /* Prevent text wrapping */
-    min-width: 120px;
-    max-width: 200px;
+    gap: 12px;
     width: 100%;
-    box-sizing: border-box;
+  }
+  
+  #ctab a { text-decoration: none; }
+  
+  .btn {
+    padding: 0.9em 1.4em;
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    font-weight: 700;
+    border-radius: 999px;
+    min-width: 160px;
     text-align: center;
-    transition: background-color 0.3s ease;
-}
-
-#ctab a{
-    text-decoration: none;
-}
-
-.btn-primary{
-    background-color: #f59520;
-    color: white;
-}
-
-.btn-primary:hover{
-    background-color: #e08f1c;
-}
-
-.btn-secondary{
-    background-color: white;
-    color: black;
-}
-
-.btn-secondary:hover{
-    background-color: #f0f0f0;
-}
-
-#homeBody{
-    height: auto;
-    width: 100%;
+    border: 1px solid transparent;
+    transition: transform .12s ease, box-shadow .25s ease, background-color .25s ease, color .25s ease;
+    box-shadow: 0 8px 22px rgba(0,0,0,.14);
+    will-change: transform;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  
+  .btn-primary {
+    background-color: var(--brand);
+    color: #fff;
+    border-color: rgba(245,149,32,.35);
+  }
+  
+  .btn-secondary {
+    background-color: #fff;
+    color: #111827;
+    border-color: rgba(0,0,0,.06);
+  }
+  
+  /* ===== Body container ===== */
+  #homeBody{
+    width: min(var(--page-width), var(--page-max-width));
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 2rem;
-}
-
-#testCards{
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    justify-content: center;
-    gap: 2rem;
+    gap: clamp(24px, 4vh, 40px);
+    padding: clamp(20px, 3vw, 32px) 0;
+    color: var(--ink);
+  }
+  
+  /* Section headings consistent with About */
+  .sectionHeader{
     width: 100%;
-    height: 100%;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-}
-
-#events{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: center;
+    font-size: clamp(1.6rem, 3.2vw, 2rem);
+    font-weight: 800;
+    letter-spacing: .2px;
+    margin: 0 0 10px 0;
     text-align: left;
-    gap: 1rem;
-}
-
-#missionStatementSection{
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: center;
-}
-
-#missionStatement{
-    font-size: 3rem;
-    line-height: 1.6;
-    text-align: center;
-    color: #ddd;
-    margin-top: 2rem;
-    font-style: italic;
-}
-
-.sectionHeader{
-    font-size: 4rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    text-align: left;
-}
-
-#videoHighlight{
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: center;
-    margin-top: 2rem;
-}
-
-#videoWrapper{
+  }
+  
+  /* ===== Mission section (card style to match About's mission card) ===== */
+  #missionStatementSection{
     width: 100%;
     display: flex;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  #missionStatementSection .sectionHeader {
+    margin-bottom: 6px;
+  }
+  
+  #missionStatement{
+    margin: 0;
+    font-size: clamp(1.125rem, 2.4vw, 1.35rem);
+    line-height: 1.65;
+    color: var(--ink);
+    font-style: normal; /* remove italic for parity */
+    background: linear-gradient(180deg, rgba(245,149,32,0.08), rgba(245,149,32,0.03));
+    border: 1px solid rgba(245,149,32,0.20);
+    border-radius: 16px;
+    padding: clamp(16px, 3vw, 24px);
+    box-shadow: 0 8px 24px rgba(17,24,39,.06);
+  }
+  
+  /* ===== Testimonials ===== */
+  #testimonials { width: 100%; display: flex; justify-content: center; }
+  #testCards{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: clamp(14px, 2vw, 22px);
+    margin: 24px 0;
+  }
+  #testCards > * {
+    grid-column: span 4;                     /* 3-up on desktop if TestCard is a block */
+    min-width: 0;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  /* ===== Events ===== */
+  #events{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  #events .sectionHeader { margin-bottom: 6px; }
+  
+  /* If EventCard uses a plain block, this gives it breathing room */
+  #events > *:not(.sectionHeader) {
+    border-radius: 16px;
+  }
+  
+  /* ===== Video Highlight ===== */
+  #videoHighlight{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  #videoHighlight .sectionHeader { margin-bottom: 6px; }
+  
+  #videoWrapper{
+    width: 100%;
+    display: grid;
+    place-items: center;
     overflow: hidden;
-}
-
-#videoFrame{
-    width: 85vw;
-    height: 70vh;
+    border-radius: 16px;
+    box-shadow: 0 10px 28px rgba(17,24,39,.10);
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    background: #000;
+  }
+  
+  #videoFrame{
+    width: min(92vw, 1000px);
+    aspect-ratio: 16 / 9;        /* responsive video height */
+    height: auto;                /* let aspect-ratio control height */
     border: none;
-}
-
-@media screen and (max-width: 1000px) {
-    #testCards {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-    .sectionHeader{
-        font-size: 2rem;
-        text-align: center;
-    }
-    #missionStatement{
-        font-size: 1.5rem;
-    }
-}
+  }
+  
+  /* ===== Responsive ===== */
+  @media screen and (max-width: 1000px) {
+    .sectionHeader { text-align: center; }
+    #missionStatement { text-align: center; }
+  
+    #testCards > * { grid-column: span 6; }  /* 2-up */
+  }
+  
+  @media screen and (max-width: 560px) {
+    #ctab { gap: 10px; }
+    .btn { min-width: 140px; }
+  
+    #testCards { grid-template-columns: repeat(6, 1fr); }
+    #testCards > * { grid-column: span 6; }  /* 1-up */
+  
+    #videoFrame { width: 94vw; }
+  }
+  
+  /* Motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    #testCards > * { transition: none; }
+    .btn { transition: none; }
+  }
+  

@@ -1,101 +1,99 @@
-#eventCard{
-    height: auto;
-    width: 100%;
-    padding: 2rem;
-    background-color: #1a1a1a;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: row;
+:root {
+  --brand: #f59520;
+  --ink: #0f172a;
+  --muted: #6b7280;
+  --surface: #ffffff;
+  --ring: rgba(245, 149, 32, 0.25);
 }
 
-#eventCardInfo{
-    height: auto;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: center;
-    text-align: left;
-    gap: 1rem;
+/* Card */
+#eventCard {
+  width: 100%;
+  display: flex;
+  flex-direction: column;                 /* single-column layout now */
+  align-items: stretch;
+  gap: 12px;
+  padding: clamp(16px, 3vw, 24px);
+  background: var(--surface);
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(17, 24, 39, 0.06);
+  transition: transform .2s ease, box-shadow .25s ease, border-color .25s ease;
+  border-left: 4px solid rgba(245,149,32,.35);  /* subtle accent */
 }
 
-#eventDetails{
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: center;
-    gap: 0.5rem;
+/* Info */
+#eventCardInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  text-align: left;
 }
 
-#eventCardButtonContainer{
-    height: 20vh;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: end;
-    justify-content: center;
+#eventCardInfo .eventDescription {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
 }
 
-#eventCardButton{
-    width: 80%;
-    height: 5rem;
-    padding: 1rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f59520;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.2rem;
-    font-weight: 600;
-    text-decoration: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin: 0.5rem 0;
+#eventTitle {
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0;
+  line-height: 1.2;
 }
 
-#eventCard h1{
-    font-size: 2rem;
-    font-weight: 600;
-    margin: 0;
-    text-align: left;
+/* Meta row: date pill + location text */
+#eventDetails {
+  display: flex;                          /* horizontal meta row */
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-#eventCard p{
-    font-size: 1.2rem;
-    font-weight: 400;
-    margin: 0;
-    text-align: left;
+#eventDetails p {
+  margin: 0;
+  font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+  line-height: 1.5;
 }
 
+/* Date as a pill chip */
+#eventDetails p:first-child {
+  color: var(--brand);
+  background: rgba(245,149,32,0.12);
+  border: 1px solid rgba(245,149,32,0.25);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+
+/* Location as muted text with a small leading dot */
+#eventDetails p:last-child {
+  color: var(--muted);
+  position: relative;
+  padding-left: 10px;
+}
+#eventDetails p:last-child::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--muted);
+}
+
+/* Typography fallback */
+#eventCard h1, #eventCard p { margin: 0; }
+
+/* Responsive */
 @media screen and (max-width: 1000px) {
-    #eventCard {
-        flex-direction: column;
-        align-items: center;
-    }
+  #eventCard { gap: 10px; }
+  #eventCardInfo { align-items: flex-start; text-align: left; } /* stays tidy */
+}
 
-    #eventCardInfo, #eventCardButtonContainer {
-        width: 100%;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-    }
-
-    #eventCard h1 {
-        font-size: 1.5rem;
-        text-align: center;
-    }
-
-    #eventCard p {
-        font-size: 1rem;
-        text-align: center;
-    }
-
-    #eventCardButton {
-        width: 60%;
-        height: auto;
-        font-size: 1rem;
-        padding: 1rem;
-    }
+@media (max-width: 560px) {
+  #eventCard { padding: 16px; }
+  #eventDetails { gap: 8px; }
 }

@@ -1,102 +1,119 @@
-#navbar{
-    height: 12vh;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: black;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 2px solid #333;
-    z-index: 1;
-}
+/* === Transparent-at-top, solid-on-scroll navbar === */
 
-#logo{
-    position: relative;
-    background-size: contain;
-    background-repeat: no-repeat;
-    height: 8vh;
-    width: 8vh;
-    margin-left: 2vw;
-}
-
-#navLinks{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 2vw;
-    margin-right: 2vw;
-    width: fit-content;
-}
-
-#navMenu{
-    display: none;
-}
-
-#navLinks ul{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: 2vw;
-}
-
-.link{
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: white;
-    text-decoration: none;
-    transition: color 0.3s ease;
-    font-weight: 600;
-}
-
-.navIcon{
-    display: none; /* Hide the hamburger menu by default */
-    width: 8vh;
-    height: 8vh;
-    color: white;
-    margin-right: 2vw;
-}
-
-.active{
-    color: #f59520;
-}
-
-@media screen and (max-width: 1000px) {
-
-    #navLinks {
-        display: none; /* Hide the menu on smaller screens */
-    }
-    
-    .navIcon {
-        display: block; /* Show the hamburger menu on smaller screens */
-    }
-
-    #navMenu{
-        flex-direction: column;
-        align-items: center;
-        justify-content: start;
-        position: absolute;
-        top: 12vh; /* Below the navbar */
-        left: 0;
-        height: calc(100vh - 12vh);
-        width: 100%;
-        background-color: black;
-        padding: 1em;
-        gap: 1em;
-        display: flex;
-        transform: translateX(100%); /* Initially hidden */
-        transition: transform 0.5s ease;
-        z-index: 1000;
-    }
-
-    #navMenu.open{
-        transform: translateX(0);
-    }
-}
+:root{
+    --nav-accent: #f59520;
+  }
+  
+  /* Base (at top) */
+  #navbar{
+      height: 12vh;
+      width: 100%;
+      position: fixed;
+      top: 0; left: 0;
+      background: transparent;             /* transparent at top */
+      backdrop-filter: none;               /* can enable blur if desired */
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+      transition: background-color .35s ease, box-shadow .35s ease, color .35s ease;
+  }
+  
+  /* Links/text default to white at top */
+  #navbar .link{ 
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color .25s ease, opacity .25s ease;
+  }
+  #navbar .link:hover{ opacity: .85; }
+  
+  #navbar .active{ color: var(--nav-accent); }
+  
+  /* Logo: if it's a dark logo, invert it at top for contrast */
+  #logo{
+      position: relative;
+      background-size: contain;
+      background-repeat: no-repeat;
+      height: 8vh; width: 8vh;
+      margin-left: 2vw;
+      filter: brightness(0) invert(1);   /* look white on transparent background */
+      transition: filter .35s ease;
+  }
+  
+  /* Hamburger icon color at top */
+  .navIcon{
+      display: none;
+      width: 8vh; height: 8vh;
+      color: #fff;                       /* white at top */
+      margin-right: 2vw;
+      transition: color .35s ease;
+  }
+  
+  /* On scroll (or when mobile menu is open), make navbar solid and switch text to black */
+  #navbar.scrolled{
+      background: #fff;
+      box-shadow: 0 6px 20px rgba(0,0,0,.08);
+  }
+  #navbar.scrolled .link{ color: #000; }
+  #navbar.scrolled .link:hover{ opacity: .7; }
+  #navbar.scrolled .active{ color: var(--nav-accent); }
+  #navbar.scrolled .navIcon{ color: #000; }
+  #navbar.scrolled #logo{ filter: none; } /* show original logo colors on white */
+  
+  /* Nav lists (unchanged layout) */
+  #navLinks{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 2vw;
+      margin-right: 2vw;
+      width: fit-content;
+  }
+  
+  #navMenu{ display: none; }
+  
+  #navLinks ul{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      list-style: none;
+      margin: 0; padding: 0;
+      gap: 2vw;
+  }
+  
+  /* Mobile */
+  @media screen and (max-width: 1000px){
+      #navLinks{ display: none; }
+      .navIcon{ display: block; }
+  
+      #navMenu{
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-start;
+          position: absolute;
+          top: 12vh; left: 0;
+          height: calc(100vh - 12vh);
+          width: 100%;
+          background-color: #fff;        /* menu is solid white for readability */
+          padding: 1em;
+          gap: 1em;
+          transform: translateX(100%);
+          transition: transform .4s ease;
+          z-index: 1100;
+      }
+      #navMenu.open{ transform: translateX(0); }
+  
+      /* Make sure navbar adopts solid style when menu is open (handled by JS by toggling .scrolled) */
+  }
+  
+  /* Motion preference */
+  @media (prefers-reduced-motion: reduce){
+    #navbar, #logo, .navIcon, #navMenu{ transition: none !important; }
+  }
+  

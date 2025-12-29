@@ -1,13 +1,18 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const Admin = require('../../models/Admin');
+const adminAuth = require('../../middleware/adminAuth');
 const router = express.Router();
 
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body || {};
+
+  if (!username || !password) {
+    return res.status(400).json({ error: 'Missing username or password' });
+  }
 
   try {
-    const admin = await Admin.findOne({ email });
+    const admin = await Admin.findOne({ username });
     if (!admin) return res.status(404).json({ error: 'Admin not found' });
 
     const isMatch = await admin.comparePassword(password);
@@ -22,6 +27,16 @@ router.post('/login', async (req, res) => {
     res.json({ token, admin: { username: admin.username, email: admin.email } });
   } catch (err) {
     res.status(500).json({ error: 'Login failed' });
+  }
+});
+
+router.get('/me', adminAuth, async (req, res) => {
+  try {
+    const admin = await Admin.findById(req.user.id).select('username email role');
+    if (!admin) return res.status(404).json({ error: 'Admin not found' });
+    res.json({ admin });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to load admin' });
   }
 });
 

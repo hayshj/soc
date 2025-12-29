@@ -13,13 +13,15 @@ function NotFound(){
         <>
             <Navbar />
             <div className="FSHero">
-                <h1>Page Not Found</h1>
-                <Link 
-                    to="/"
-                    id="backToHome"
-                >
-                    Back to Home
-                </Link>
+                <div className="page-width not-found-content">
+                    <h1>Page Not Found</h1>
+                    <Link 
+                        to="/"
+                        id="backToHome"
+                    >
+                        Back to Home
+                    </Link>
+                </div>
             </div>
         </>
     )

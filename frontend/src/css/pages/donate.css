@@ -1,0 +1,192 @@
+/* Donate page — matches About/Home modern system */
+
+:root {
+  --brand: #f59520;
+  --ink: #0f172a;
+  --muted: #6b7280;
+  --surface: #ffffff;
+  --ring: rgba(245, 149, 32, 0.25);
+}
+
+.donate-container {
+width: min(var(--page-width), var(--page-max-width));
+margin: 0 auto;
+padding: clamp(6px, 1.5vw, 12px) 0 96px;
+color: var(--ink);
+}
+
+.section { margin-top: 40px; }
+
+.section-header { margin-bottom: 14px; }
+.section-header h2 {
+margin: 0 0 4px 0;
+font-size: clamp(1.5rem, 2.2vw, 2rem);
+font-weight: 800;
+letter-spacing: .2px;
+}
+.kicker {
+margin: 0;
+color: var(--muted);
+font-size: .95rem;
+}
+
+.card {
+background: var(--surface);
+border: 1px solid rgba(15, 23, 42, 0.06);
+border-radius: 16px;
+padding: clamp(16px, 3vw, 24px);
+box-shadow: 0 8px 24px rgba(17, 24, 39, 0.06);
+}
+
+/* Bulleted list with better rhythm */
+.bullet-list {
+margin: 0;
+padding-left: 1.1rem;
+display: grid;
+gap: 8px;
+}
+.bullet-list li { line-height: 1.6; }
+
+/* CTA split card */
+.cta-split {
+display: grid;
+grid-template-columns: 1fr auto;
+align-items: center;
+gap: 16px;
+}
+.cta-copy {
+display: flex;
+align-items: center;
+gap: 12px;
+}
+.icon {
+font-size: 28px;
+color: var(--brand);
+flex: 0 0 auto;
+}
+
+/* Address card */
+.address-card {
+display: grid;
+grid-template-columns: 28px 1fr;
+align-items: start;
+gap: 12px;
+}
+.address-card .org { font-weight: 800; }
+.address-card .note { margin-top: 6px; color: var(--muted); }
+
+/* Payment grid (kept for future, OK to leave even if PayPal-only) */
+.grid-3 {
+display: grid;
+grid-template-columns: repeat(12, 1fr);
+gap: clamp(14px, 2vw, 22px);
+}
+.pay-card {
+grid-column: span 4;
+text-align: left;
+transition: transform .2s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.pay-card:hover {
+transform: translateY(-2px);
+box-shadow: 0 12px 28px rgba(17,24,39,0.10);
+border-color: var(--ring);
+}
+.pill-list {
+display: flex;
+flex-wrap: wrap;
+gap: 8px;
+margin-top: 6px;
+}
+.pill {
+display: inline-block;
+font-weight: 700;
+color: var(--brand);
+background: rgba(245,149,32,0.12);
+padding: 6px 12px;
+border-radius: 999px;
+border: 1px solid rgba(245,149,32,0.25);
+}
+
+/* Buttons (consistent with Home/About) */
+.btn {
+padding: 0.9em 1.4em;
+font-size: clamp(1rem, 1.4vw, 1.1rem);
+font-weight: 700;
+border-radius: 999px;
+text-align: center;
+border: 1px solid transparent;
+transition: transform .12s ease, box-shadow .25s ease, background-color .25s ease, color .25s ease;
+box-shadow: 0 8px 22px rgba(0,0,0,.12);
+text-decoration: none;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+}
+.btn:hover { transform: translateY(-1px); }
+
+.btn-primary {
+background-color: var(--brand);
+color: #fff;
+border-color: rgba(245,149,32,.35);
+}
+.btn-primary:hover {
+background-color: #e08f1c;
+box-shadow: 0 12px 26px rgba(224,143,28,.35);
+}
+
+.btn-secondary {
+background-color: #fff;
+color: #111827;
+border-color: rgba(0,0,0,.06);
+}
+.btn-secondary:hover {
+background-color: #f7f7f7;
+box-shadow: 0 12px 24px rgba(17,24,39,.12);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+.grid-3 { grid-template-columns: repeat(6, 1fr); }
+.pay-card { grid-column: span 6; }
+.cta-split { grid-template-columns: 1fr; gap: 12px; }
+}
+@media (max-width: 560px) {
+.donate-container { padding: clamp(6px, 1.5vw, 12px) 0 80px; }
+.grid-3 { grid-template-columns: repeat(6, 1fr); }
+.pay-card { grid-column: span 6; }
+}
+
+/* Motion */
+@media (prefers-reduced-motion: reduce) {
+.btn, .pay-card { transition: none; }
+}
+
+/* ============================
+ PayPal-only layout additions
+ ============================ */
+
+/* Single PayPal card with icon, copy, and button */
+.pay-only {
+display: grid;
+grid-template-columns: 28px 1fr auto;
+align-items: center;
+gap: 14px;
+}
+
+.pay-copy {
+color: var(--muted);
+}
+
+/* Stack nicely on small screens */
+@media (max-width: 640px) {
+.pay-only {
+  grid-template-columns: 1fr;
+  text-align: center;
+}
+.pay-only .icon {
+  margin: 0 auto;
+}
+.pay-only .btn {
+  justify-self: center;
+}
+}

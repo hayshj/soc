@@ -1,65 +1,51 @@
 const mongoose = require('mongoose');
 
 const registrationSchema = new mongoose.Schema({
-    eventId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Event',
-        required: true,
-    },
     name: {
         type: String,
         required: true,
     },
-    namePreferred: {
-        type: String,
-        required: true,
-    },
-    address: {
-        type: String,
-        required: true,
-    },
-    city: {
-        type: String,
-        required: true,
-    },
-    state: {
-        type: String,
-        required: true,
-    },
-    zip: {
-        type: String,
-        required: true,
-        match: /^\d{5}(-\d{4})?$/,
-    },
-    age: {
-        type: Number,
-        required: true,
-        min: 0,
-    },
-    dob: {
-        type: Date,
-        required: true,
-    },
-    medicalHistory: {
+    preferredName: {
         type: String,
         required: false,
     },
-    gaurdianName: {
+    address: {
+        type: String,
+        required: false,
+    },
+    city: {
+        type: String,
+        required: false,
+    },
+    state: {
+        type: String,
+        required: false,
+    },
+    zip: {
+        type: String,
+        required: false,
+    },
+    phone: {
         type: String,
         required: true,
     },
-    gaurdianAddress: {
-        type: String,
-        required: true,
-    },
-    gaurdianPhone: {
-        type: String,
-        required: true,
-    },
-    gaurdianEmail: {
+    email: {
         type: String,
         required: true,
         match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    },
+    role: {
+        type: String,
+        required: true,
+        enum: ['Youth', 'Mentor'],
+    },
+    dob: {
+        type: Date,
+        required: false,
+    },
+    medicalHistory: {
+        type: String,
+        required: true,
     },
     emergencyContactName: {
         type: String,
@@ -69,9 +55,13 @@ const registrationSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    emergencyContactRelation: {
+    guardianName: {
         type: String,
-        required: true,
+        required: false,
+    },
+    guardianPhone: {
+        type: String,
+        required: false,
     },
     registrationDate: {
         type: Date,

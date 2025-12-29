@@ -1,28 +1,32 @@
 #loginPage{
-    width: 100vw;
-    height: calc(100vh - 12vh);
+    width: 100%;
+    min-height: calc(100vh - 12vh);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-top: 12vh;
+    padding: 0 16px;
 }
 
 #loginBlock{
-    width: fit-content;
-    max-width: 85%;
-    height: 60dvh;
+    width: min(var(--page-width), var(--page-max-width));
+    max-width: var(--page-max-width);
+    min-height: 320px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: #121212;
     border-radius: 5px;
-    padding: 4rem;
+    padding: clamp(2rem, 6vw, 4rem);
+    color: #f8fafc;
 }
 
 #loginTitle{
-    font-size: 3.5rem;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    color: #f8fafc;
+    margin: 0 0 2rem;
 }
 
 .input-group{
@@ -35,7 +39,7 @@
 }
 
 .input-group label{
-    color: white;
+    color: #e2e8f0;
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
 }
@@ -46,15 +50,41 @@
     border: none;
     border-radius: 5px;
     background-color: #2a2a2a;
-    color: white;
+    color: #f8fafc;
     font-size: 1rem;
+}
+
+.password-field {
+    position: relative;
+    display: flex;
+    width: 100%;
+}
+
+.password-field .input {
+    flex: 1 1 auto;
+    padding-right: 2.75rem;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: #cbd5f5;
+    padding: 0.25rem;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    font-size: 1.1rem;
 }
 
 #loginButton{
     width: 100%;
     padding: 0.75rem;
     background-color: #f59520;
-    color: white;
+    color: #0f172a;
     border: none;
     border-radius: 5px;
     font-size: 1.2rem;
@@ -64,7 +94,22 @@
 }
 
 .error{
-    color: red;
+    color: #f87171;
     font-size: 1rem;
     margin-top: 0.5rem;
+}
+
+@media (max-width: 480px) {
+    #loginBlock {
+        border-radius: 12px;
+        padding: 1.75rem;
+    }
+
+    .input-group label {
+        font-size: 1rem;
+    }
+
+    #loginButton {
+        font-size: 1rem;
+    }
 }
