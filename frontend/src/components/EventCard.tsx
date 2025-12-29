@@ -1,5 +1,4 @@
 import '../css/components/eventCard.css';
-import { Link } from 'react-router-dom';
 
 type EventCardProps = {
   title: string;

@@ -6,7 +6,8 @@ import { API_BASE_URL } from '../utils/api';
 // Components
 import Navbar from '../components/Navbar';
 
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type { FormEvent } from 'react';
 
 type ForumPost = {
   _id: string;
