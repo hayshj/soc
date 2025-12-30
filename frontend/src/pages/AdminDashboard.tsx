@@ -518,7 +518,7 @@ function AdminDashboard() {
               </div>
               <div className="admin-list">
                 {posts.map((post) => (
-                  <article className="admin-row" key={post._id}>
+                  <article className="admin-row admin-post-card" key={post._id}>
                     <div>
                       <h3>{post.name}</h3>
                       <p>{post.message}</p>

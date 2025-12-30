@@ -131,30 +131,56 @@
     line-height: 1.6;
 }
 
+/* -------------------- */
+/* POST PHOTOS (CLEAN) */
+/* -------------------- */
+
 .post-photos {
     margin-top: 12px;
-    display: grid;
+    display: inline-flex;
     gap: 10px;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    flex-wrap: wrap;
+    align-items: flex-start;
 }
 
+/* Images define their own width */
 .post-photos img {
-    width: 100%;
-    height: 140px;
-    object-fit: cover;
-    border-radius: 12px;
+    max-width: 100%;
+    height: auto;
+    max-height: 420px;
+
+    object-fit: contain;
+    object-position: center;
+
+    background: #f1f5f9;
+    border-radius: 14px;
     border: 1px solid rgba(15, 23, 42, 0.12);
+
+    display: block;
 }
 
-.state {
-    margin-top: 12px;
-    color: #6b7280;
+/* Single image looks intentional */
+.post-photos img:only-child {
+    max-width: 100%;
 }
 
-.state.error {
-    color: #b91c1c;
+/* Mobile tweaks */
+@media (max-width: 560px) {
+    .forum-container {
+        padding: 48px 0 80px;
+    }
+
+    .post-photos {
+        flex-direction: column;
+    }
+
+    .post-photos img {
+        max-width: 100%;
+        max-height: 320px;
+    }
 }
 
+/* Modal */
 .modal-backdrop {
     position: fixed;
     inset: 0;
@@ -196,25 +222,4 @@
     height: 36px;
     border-radius: 50%;
     cursor: pointer;
-}
-
-@media (max-width: 560px) {
-    .forum-container { padding: 48px 0 80px; }
-    .modal-backdrop {
-        padding: 0;
-        place-items: end center;
-    }
-    .modal {
-        width: 100%;
-        border-radius: 16px 16px 0 0;
-        max-height: 92vh;
-        padding: 18px 16px 24px;
-    }
-    .modal-close {
-        width: 40px;
-        height: 40px;
-    }
-    .post-photos img {
-        height: 160px;
-    }
 }
