@@ -21,13 +21,15 @@ app.use("/api/registration", registrationRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/forum", forumRoutes);
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 connectDB();
 
-// ✅ Serve frontend last (Vite uses 'dist'; CRA uses 'build')
+// ?. Serve frontend last (Vite uses 'dist'; CRA uses 'build')
 const frontendPath = path.join(__dirname, 'frontend', 'dist');
 app.use(express.static(frontendPath));
 
-// ✅ Frontend fallback (only for non-API routes)
+// ?. Frontend fallback (only for non-API routes)
 app.get(/^\/(?!api\/).*/, (req, res) => {
   res.sendFile(path.join(frontendPath, 'index.html'));
 });

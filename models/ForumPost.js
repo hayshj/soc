@@ -13,6 +13,10 @@ const forumPostSchema = new mongoose.Schema({
         trim: true,
         maxlength: 2000,
     },
+    photos: {
+        type: [String],
+        default: [],
+    },
     createdAt: {
         type: Date,
         default: Date.now,
