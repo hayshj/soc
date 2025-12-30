@@ -98,7 +98,7 @@ function Donate() {
             <p><strong>SIGHTS ON CHRIST</strong> is a 501(c)(3) non-profit organization.</p>
             <p>All donations are tax-deductible to the extent allowed by law.</p>
             <p className="muted">
-              Texas Tax Exempt / EIN: <strong>47-4104861</strong> &nbsp;•&nbsp; You will receive a receipt for your records.
+              Texas Tax Exempt / EIN: <strong>47-4104861</strong> &nbsp;•&nbsp; Recipts are available upon request.
             </p>
           </div>
         </section>

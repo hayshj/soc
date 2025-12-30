@@ -25,7 +25,7 @@ function Footer() {
           <h3>Explore</h3>
           <Link to="/about">About</Link>
           <Link to="/beliefs">Our Beliefs</Link>
-          <Link to="/forum">Forum</Link>
+          <Link to="/forum">Deer Stand Testimonies</Link>
           <Link to="/get-involved">Get Involved</Link>
           <Link to="/events">Events</Link>
           <Link to="/donate">Donate</Link>
@@ -47,3 +47,4 @@ function Footer() {
 }
 
 export default Footer;
+

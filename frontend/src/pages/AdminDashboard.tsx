@@ -20,6 +20,7 @@ type ForumPost = {
   _id: string;
   name: string;
   message: string;
+  photos?: string[];
   createdAt: string;
 };
 
@@ -106,6 +107,12 @@ function AdminDashboard() {
     if (value === undefined || value === null) return 'N/A';
     const trimmed = value.toString().trim();
     return trimmed.length > 0 ? trimmed : 'N/A';
+  };
+
+  const resolvePhotoUrl = (path: string) => {
+    if (path.startsWith('http')) return path;
+    const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+    return `${API_BASE_URL}${normalizedPath}`;
   };
 
   const filteredRegistrations = useMemo(() => {
@@ -515,6 +522,18 @@ function AdminDashboard() {
                     <div>
                       <h3>{post.name}</h3>
                       <p>{post.message}</p>
+                      {post.photos && post.photos.length > 0 && (
+                        <div className="admin-post-photos">
+                          {post.photos.map((photoUrl, index) => (
+                            <img
+                              key={`${post._id}-photo-${index}`}
+                              src={resolvePhotoUrl(photoUrl)}
+                              alt={`Post photo ${index + 1}`}
+                              loading="lazy"
+                            />
+                          ))}
+                        </div>
+                      )}
                       <p className="meta">{new Date(post.createdAt).toLocaleDateString()}</p>
                     </div>
                     <div className="admin-row-actions">

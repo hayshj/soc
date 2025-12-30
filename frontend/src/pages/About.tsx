@@ -10,6 +10,7 @@ type BoardMember = {
   name: string;
   role: string;
   bio?: string;
+  photo?: string;
 };
 
 const BOARD: BoardMember[] = [
@@ -64,7 +65,13 @@ function About() {
             {BOARD.map((m) => (
               <article className="member-card" key={m.name}>
                 <div className="member-top">
-                  <div className="avatar" aria-hidden="true">{getInitials(m.name)}</div>
+                  <div className="member-photo" aria-hidden="true">
+                    {m.photo ? (
+                      <img src={m.photo} alt="" loading="lazy" />
+                    ) : (
+                      <span className="member-photo-fallback">{getInitials(m.name)}</span>
+                    )}
+                  </div>
                   <div className="member-meta">
                     <h3 className="member-name">{m.name}</h3>
                     <span className="member-role">{m.role}</span>

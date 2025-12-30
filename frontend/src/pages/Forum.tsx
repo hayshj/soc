@@ -7,12 +7,13 @@ import { API_BASE_URL } from '../utils/api';
 import Navbar from '../components/Navbar';
 
 import { useEffect, useRef, useState } from 'react';
-import type { FormEvent } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 
 type ForumPost = {
   _id: string;
   name: string;
   message: string;
+  photos?: string[];
   createdAt: string;
 };
 
@@ -22,10 +23,12 @@ function Forum() {
   const [error, setError] = useState<string | null>(null);
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
+  const [photos, setPhotos] = useState<File[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const scrollYRef = useRef(0);
+  const photoInputRef = useRef<HTMLInputElement | null>(null);
 
   const fetchPosts = async () => {
     try {
@@ -47,7 +50,14 @@ function Forum() {
   }, []);
 
   useEffect(() => {
-    if (!isModalOpen) return;
+    if (!isModalOpen) {
+      setNotice(null);
+      setPhotos([]);
+      if (photoInputRef.current) {
+        photoInputRef.current.value = '';
+      }
+      return;
+    }
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setIsModalOpen(false);
@@ -75,22 +85,47 @@ function Forum() {
     };
   }, [isModalOpen]);
 
+  const resolvePhotoUrl = (path: string) => {
+    if (path.startsWith('http')) return path;
+    const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+    return `${API_BASE_URL}${normalizedPath}`;
+  };
+
+  const handlePhotosChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const nextFiles = Array.from(event.target.files ?? []);
+    setPhotos(nextFiles);
+  };
+
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    if (photos.length > 4) {
+      setNotice('Please select up to 4 photos.');
+      return;
+    }
     setSubmitting(true);
     setNotice(null);
 
     try {
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('message', message);
+      photos.forEach((file) => formData.append('photos', file));
+
       const res = await fetch(`${API_BASE_URL}/api/forum/create`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, message }),
+        body: formData,
       });
 
-      if (!res.ok) throw new Error('Unable to post right now.');
+      const contentType = res.headers.get('content-type') || '';
+      const payload = contentType.includes('application/json') ? await res.json() : null;
+      if (!res.ok) throw new Error(payload?.message || 'Unable to post right now.');
 
       setName('');
       setMessage('');
+      setPhotos([]);
+      if (photoInputRef.current) {
+        photoInputRef.current.value = '';
+      }
       setNotice('Thanks for sharing your experience.');
       await fetchPosts();
       setIsModalOpen(false);
@@ -136,6 +171,18 @@ function Forum() {
                     </span>
                   </div>
                   <p>{post.message}</p>
+                  {post.photos && post.photos.length > 0 && (
+                    <div className="post-photos">
+                      {post.photos.map((photoUrl, index) => (
+                        <img
+                          key={`${post._id}-photo-${index}`}
+                          src={resolvePhotoUrl(photoUrl)}
+                          alt={`Post photo ${index + 1}`}
+                          loading="lazy"
+                        />
+                      ))}
+                    </div>
+                  )}
                 </article>
               ))}
             </div>
@@ -180,6 +227,19 @@ function Forum() {
                   maxLength={2000}
                   required
                 />
+              </label>
+              <label className="field">
+                <span>Photos (optional)</span>
+                <input
+                  ref={photoInputRef}
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handlePhotosChange}
+                />
+                <span className="field-hint">
+                  {photos.length > 0 ? `${photos.length} file(s) selected` : 'Up to 4 images, 5MB each.'}
+                </span>
               </label>
               <div className="form-actions">
                 <button className="btn btn-primary" type="submit" disabled={submitting}>

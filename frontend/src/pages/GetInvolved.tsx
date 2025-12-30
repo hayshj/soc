@@ -54,10 +54,6 @@ function GetInvolved() {
               <p>Secretary</p>
               <a href="mailto:kollinp@sightsonchrist.com">kollinp@sightsonchrist.com</a>
             </div>
-            <div className="contact-card">
-              <h3>General Inquiries</h3>
-              <a href="mailto:info@sightsonchrist.com">info@sightsonchrist.com</a>
-            </div>
           </div>
         </section>
       </main>

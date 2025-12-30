@@ -94,7 +94,7 @@ function Navbar() {
           Our Beliefs
         </Link>
         <Link to="/forum" className={`link ${location.pathname === '/forum' ? 'active' : ''}`}>
-          Forum
+          Deer Stand Testimonies
         </Link>
       </div>
 
@@ -143,7 +143,7 @@ function Navbar() {
           </li>
           <li>
             <Link to="/forum" className={`link ${location.pathname === '/forum' ? 'active' : ''}`}>
-              Forum
+              Deer Stand Testimonies
             </Link>
           </li>
         </ul>
@@ -153,3 +153,4 @@ function Navbar() {
 }
 
 export default Navbar;
+
