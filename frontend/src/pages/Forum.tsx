@@ -238,7 +238,7 @@ function Forum() {
                   onChange={handlePhotosChange}
                 />
                 <span className="field-hint">
-                  {photos.length > 0 ? `${photos.length} file(s) selected` : 'Up to 4 images, 5MB each.'}
+                  {photos.length > 0 ? `${photos.length} file(s) selected` : 'Up to 4 images. Large photos are compressed.'}
                 </span>
               </label>
               <div className="form-actions">

@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
 const multer = require('multer');
+const sharp = require('sharp');
 const router = express.Router();
 
 const ForumPost = require('../../models/ForumPost');
@@ -11,20 +12,10 @@ const adminAuth = require('../../middleware/adminAuth');
 const uploadDir = path.join(__dirname, '..', '..', 'uploads', 'forum');
 fs.mkdirSync(uploadDir, { recursive: true });
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, uploadDir),
-    filename: (req, file, cb) => {
-        const ext = path.extname(file.originalname).toLowerCase();
-        const safeExt = ext.length <= 5 ? ext : '';
-        const uniqueName = `${Date.now()}-${crypto.randomBytes(6).toString('hex')}${safeExt}`;
-        cb(null, uniqueName);
-    },
-});
-
 const upload = multer({
-    storage,
+    storage: multer.memoryStorage(),
     limits: {
-        fileSize: 5 * 1024 * 1024,
+        fileSize: 20 * 1024 * 1024,
         files: 4,
     },
     fileFilter: (req, file, cb) => {
@@ -35,6 +26,19 @@ const upload = multer({
     },
 });
 
+const selectOutputFormat = (mimeType) => {
+    if (mimeType === 'image/png') {
+        return { format: 'png', ext: '.png', options: { compressionLevel: 9 } };
+    }
+    if (mimeType === 'image/webp') {
+        return { format: 'webp', ext: '.webp', options: { quality: 80 } };
+    }
+    if (mimeType === 'image/avif') {
+        return { format: 'avif', ext: '.avif', options: { quality: 50 } };
+    }
+    return { format: 'jpeg', ext: '.jpg', options: { quality: 80 } };
+};
+
 router.get('/', (req, res) => {
     ForumPost.find().sort({ createdAt: -1 })
         .then(posts => res.json(posts))
@@ -43,9 +47,29 @@ router.get('/', (req, res) => {
 
 router.post('/create', upload.array('photos', 4), async (req, res) => {
     const { name, message } = req.body;
-    const photoUrls = (req.files || []).map((file) => `/uploads/forum/${file.filename}`);
+    const files = req.files || [];
+    const photoUrls = [];
 
     try {
+        for (const file of files) {
+            const { format, ext, options } = selectOutputFormat(file.mimetype);
+            const filename = `${Date.now()}-${crypto.randomBytes(6).toString('hex')}${ext}`;
+            const outputPath = path.join(uploadDir, filename);
+
+            await sharp(file.buffer)
+                .rotate()
+                .resize({
+                    width: 1600,
+                    height: 1600,
+                    fit: 'inside',
+                    withoutEnlargement: true,
+                })
+                .toFormat(format, options)
+                .toFile(outputPath);
+
+            photoUrls.push(`/uploads/forum/${filename}`);
+        }
+
         const newPost = new ForumPost({
             name,
             message,
