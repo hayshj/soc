@@ -539,4 +539,12 @@
   .admin-container {
     padding: calc(12vh + 16px) 0 80px;
   }
+
+  .admin-post-photos {
+    flex-direction: column;
+  }
+
+  .admin-post-photos img {
+    max-height: 320px;
+  }
 }

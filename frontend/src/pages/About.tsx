@@ -48,8 +48,7 @@ function About() {
               To impact youth lives, by spreading the gospel, while experiencing the great outdoors.
             </blockquote>
             <p className="mission-body">
-              We live this out through trips, gatherings, teaching, and service—creating spaces where faith
-              meets everyday life in creation and community.
+              Through guided expeditions, campout gatherings, and outdoor stewardship, we foster enviornments where faith is strengthened, character is built, and lifelong memories are made in the silence of the woods and the community of campfire.
             </p>
           </div>
         </section>
