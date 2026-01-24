@@ -79,6 +79,9 @@ function Navbar() {
         <Link to="/events" className={`link ${location.pathname === '/events' ? 'active' : ''}`}>
           Events
         </Link>
+        <Link to="/devotionals" className={`link ${location.pathname === '/devotionals' ? 'active' : ''}`}>
+          Devotionals
+        </Link>
         <a
           href="https://sightsonchrist.smugmug.com"
           className="link"
@@ -119,6 +122,11 @@ function Navbar() {
           <li>
             <Link to="/events" className={`link ${location.pathname === '/events' ? 'active' : ''}`}>
               Events
+            </Link>
+          </li>
+          <li>
+            <Link to="/devotionals" className={`link ${location.pathname === '/devotionals' ? 'active' : ''}`}>
+              Devotionals
             </Link>
           </li>
           <li>

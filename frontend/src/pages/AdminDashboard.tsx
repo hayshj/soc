@@ -46,12 +46,20 @@ type Registration = {
 
 type RegistrationSortKey = 'name' | 'role' | 'createdAt';
 
+type Devotional = {
+  _id: string;
+  title: string;
+  documents?: string[];
+  createdAt?: string;
+};
+
 function AdminDashboard() {
   const navigate = useNavigate();
   const [authChecked, setAuthChecked] = useState(false);
   const [events, setEvents] = useState<EventItem[]>([]);
   const [posts, setPosts] = useState<ForumPost[]>([]);
   const [registrations, setRegistrations] = useState<Registration[]>([]);
+  const [devotionals, setDevotionals] = useState<Devotional[]>([]);
   const [eventForm, setEventForm] = useState({
     title: '',
     description: '',
@@ -60,7 +68,7 @@ function AdminDashboard() {
   });
   const [eventToEdit, setEventToEdit] = useState<EventItem | null>(null);
   const [status, setStatus] = useState('');
-  const [activeTab, setActiveTab] = useState<'events' | 'posts' | 'people'>('people');
+  const [activeTab, setActiveTab] = useState<'events' | 'posts' | 'people' | 'devotionals'>('people');
   const [postToDelete, setPostToDelete] = useState<ForumPost | null>(null);
   const [eventToDelete, setEventToDelete] = useState<EventItem | null>(null);
   const [eventModalOpen, setEventModalOpen] = useState(false);
@@ -87,6 +95,14 @@ function AdminDashboard() {
     guardianName: '',
     guardianPhone: '',
   });
+  const [devotionalModalOpen, setDevotionalModalOpen] = useState(false);
+  const [devotionalToEdit, setDevotionalToEdit] = useState<Devotional | null>(null);
+  const [devotionalToDelete, setDevotionalToDelete] = useState<Devotional | null>(null);
+  const [devotionalForm, setDevotionalForm] = useState({
+    title: '',
+  });
+  const [devotionalFiles, setDevotionalFiles] = useState<File[]>([]);
+  const [devotionalFileInputKey, setDevotionalFileInputKey] = useState(0);
 
   const token = localStorage.getItem('adminToken');
 
@@ -113,6 +129,23 @@ function AdminDashboard() {
     if (path.startsWith('http')) return path;
     const normalizedPath = path.startsWith('/') ? path : `/${path}`;
     return `${API_BASE_URL}${normalizedPath}`;
+  };
+
+  const resolveDocumentUrl = (docPath: string) => {
+    if (docPath.startsWith('http')) return docPath;
+    const normalizedPath = docPath.startsWith('/') ? docPath : `/${docPath}`;
+    return `${API_BASE_URL}${normalizedPath}`;
+  };
+
+  const formatDocumentName = (docPath: string) => {
+    try {
+      const url = new URL(resolveDocumentUrl(docPath));
+      const parts = url.pathname.split('/');
+      return decodeURIComponent(parts[parts.length - 1] || docPath);
+    } catch {
+      const parts = docPath.split('/');
+      return parts[parts.length - 1] || docPath;
+    }
   };
 
   const filteredRegistrations = useMemo(() => {
@@ -182,6 +215,12 @@ function AdminDashboard() {
     setRegistrations(data ?? []);
   };
 
+  const loadDevotionals = async () => {
+    const res = await fetch(`${API_BASE_URL}/api/devotionals`);
+    const data = await res.json();
+    setDevotionals(data ?? []);
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
     navigate('/admin/login');
@@ -214,10 +253,19 @@ function AdminDashboard() {
     loadEvents();
     loadPosts();
     loadRegistrations();
+    loadDevotionals();
   }, [authChecked]);
 
   useEffect(() => {
-    if (!postToDelete && !eventModalOpen && !eventToDelete && !registrationToDelete && !registrationToEdit) {
+    if (
+      !postToDelete
+      && !eventModalOpen
+      && !eventToDelete
+      && !registrationToDelete
+      && !registrationToEdit
+      && !devotionalModalOpen
+      && !devotionalToDelete
+    ) {
       return undefined;
     }
     const previousOverflow = document.body.style.overflow;
@@ -279,6 +327,28 @@ function AdminDashboard() {
     setEventToEdit(null);
   };
 
+  const openCreateDevotionalModal = () => {
+    setDevotionalToEdit(null);
+    setDevotionalForm({ title: '' });
+    setDevotionalFiles([]);
+    setDevotionalFileInputKey((prev) => prev + 1);
+    setDevotionalModalOpen(true);
+  };
+
+  const openEditDevotionalModal = (devotional: Devotional) => {
+    setDevotionalToEdit(devotional);
+    setDevotionalForm({ title: devotional.title ?? '' });
+    setDevotionalFiles([]);
+    setDevotionalFileInputKey((prev) => prev + 1);
+    setDevotionalModalOpen(true);
+  };
+
+  const closeDevotionalModal = () => {
+    setDevotionalModalOpen(false);
+    setDevotionalToEdit(null);
+    setDevotionalFiles([]);
+  };
+
   const handleCreateEvent = async (event: FormEvent) => {
     event.preventDefault();
     setStatus('');
@@ -320,6 +390,50 @@ function AdminDashboard() {
     }
   };
 
+  const handleSaveDevotional = async (event: FormEvent) => {
+    event.preventDefault();
+    setStatus('');
+    const formData = new FormData();
+    formData.append('title', devotionalForm.title);
+    devotionalFiles.forEach((file) => {
+      formData.append('documents', file);
+    });
+
+    try {
+      const endpoint = devotionalToEdit
+        ? `${API_BASE_URL}/api/devotionals/${devotionalToEdit._id}`
+        : `${API_BASE_URL}/api/devotionals/create`;
+      const res = await fetch(endpoint, {
+        method: devotionalToEdit ? 'PUT' : 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+      if (!res.ok) throw new Error('Failed to save devotional');
+      closeDevotionalModal();
+      await loadDevotionals();
+    } catch {
+      setStatus('Unable to save devotional right now.');
+    }
+  };
+
+  const handleDeleteDevotional = async (id: string) => {
+    setStatus('');
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/devotionals/${id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!res.ok) throw new Error('Failed to delete devotional');
+      await loadDevotionals();
+    } catch {
+      setStatus('Unable to delete devotional right now.');
+    }
+  };
+
   const handleDeletePost = async (id: string) => {
     setStatus('');
     try {
@@ -341,6 +455,13 @@ function AdminDashboard() {
     const id = postToDelete._id;
     setPostToDelete(null);
     await handleDeletePost(id);
+  };
+
+  const confirmDeleteDevotional = async () => {
+    if (!devotionalToDelete) return;
+    const id = devotionalToDelete._id;
+    setDevotionalToDelete(null);
+    await handleDeleteDevotional(id);
   };
 
   const confirmDeleteEvent = async () => {
@@ -463,6 +584,15 @@ function AdminDashboard() {
           >
             Posts
           </button>
+          <button
+            type="button"
+            className={activeTab === 'devotionals' ? 'tab active' : 'tab'}
+            onClick={() => setActiveTab('devotionals')}
+            role="tab"
+            aria-selected={activeTab === 'devotionals'}
+          >
+            Devotionals
+          </button>
         </div>
 
         {activeTab === 'events' && (
@@ -553,6 +683,69 @@ function AdminDashboard() {
           </div>
         )}
 
+        {activeTab === 'devotionals' && (
+          <div className="admin-grid admin-grid-single" role="tabpanel">
+            <section className="admin-section">
+              <div className="section-heading">
+                <h2>Devotionals</h2>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={openCreateDevotionalModal}
+                >
+                  <Plus size={18} />
+                </button>
+              </div>
+              <div className="admin-list">
+                {devotionals.map((devotional) => (
+                  <article className="admin-row" key={devotional._id}>
+                    <div>
+                      <h3>{devotional.title}</h3>
+                      {devotional.createdAt && (
+                        <p className="meta">
+                          {new Date(devotional.createdAt).toLocaleDateString()}
+                        </p>
+                      )}
+                      {devotional.documents && devotional.documents.length > 0 && (
+                        <div className="admin-documents">
+                          {devotional.documents.map((docUrl, index) => (
+                            <a
+                              key={`${devotional._id}-doc-${index}`}
+                              href={resolveDocumentUrl(docUrl)}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              {formatDocumentName(docUrl)}
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    <div className="admin-row-actions">
+                      <button
+                        className="btn btn-secondary btn-icon"
+                        type="button"
+                        onClick={() => openEditDevotionalModal(devotional)}
+                        aria-label={`Edit devotional ${devotional.title}`}
+                      >
+                        <Pencil size={18} />
+                      </button>
+                      <button
+                        className="btn btn-secondary btn-icon"
+                        type="button"
+                        onClick={() => setDevotionalToDelete(devotional)}
+                        aria-label={`Delete devotional ${devotional.title}`}
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          </div>
+        )}
+
         {postToDelete && (
           <div className="admin-modal" role="dialog" aria-modal="true">
             <div className="admin-modal-backdrop" onClick={() => setPostToDelete(null)} />
@@ -583,6 +776,44 @@ function AdminDashboard() {
                   type="button"
                   className="btn btn-primary btn-delete"
                   onClick={confirmDeletePost}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {devotionalToDelete && (
+          <div className="admin-modal" role="dialog" aria-modal="true">
+            <div className="admin-modal-backdrop" onClick={() => setDevotionalToDelete(null)} />
+            <div className="admin-modal-card" role="document">
+              <div className="admin-modal-header">
+                <button
+                  type="button"
+                  className="admin-modal-close"
+                  aria-label="Close modal"
+                  onClick={() => setDevotionalToDelete(null)}
+                >
+                  x
+                </button>
+              </div>
+              <h3>Delete devotional?</h3>
+              <p>
+                This will permanently remove {devotionalToDelete.title}.
+              </p>
+              <div className="admin-modal-actions">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setDevotionalToDelete(null)}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary btn-delete"
+                  onClick={confirmDeleteDevotional}
                 >
                   Delete
                 </button>
@@ -1008,6 +1239,66 @@ function AdminDashboard() {
                   </button>
                   <button type="submit" className="btn btn-primary">
                     {eventToEdit ? 'Save' : 'Create'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {devotionalModalOpen && (
+          <div className="admin-modal" role="dialog" aria-modal="true">
+            <div className="admin-modal-backdrop" onClick={closeDevotionalModal} />
+            <div className="admin-modal-card" role="document">
+              <div className="admin-modal-header">
+                <button
+                  type="button"
+                  className="admin-modal-close"
+                  aria-label="Close modal"
+                  onClick={closeDevotionalModal}
+                >
+                  x
+                </button>
+              </div>
+              <h3>{devotionalToEdit ? 'Edit devotional' : 'Create devotional'}</h3>
+              <form className="admin-form" onSubmit={handleSaveDevotional}>
+                <label className="field">
+                  Title
+                  <input
+                    type="text"
+                    value={devotionalForm.title}
+                    onChange={(event) => setDevotionalForm({ title: event.target.value })}
+                    required
+                  />
+                </label>
+                <label className="field">
+                  Documents
+                  <input
+                    key={devotionalFileInputKey}
+                    type="file"
+                    multiple
+                    accept=".pdf,.doc,.docx,.txt,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain"
+                    onChange={(event) => {
+                      const files = Array.from(event.target.files ?? []);
+                      setDevotionalFiles(files);
+                    }}
+                  />
+                </label>
+                {devotionalToEdit && devotionalToEdit.documents && devotionalToEdit.documents.length > 0 && (
+                  <div className="admin-documents-note">
+                    Uploading new files will replace the existing documents.
+                  </div>
+                )}
+                <div className="admin-modal-actions">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={closeDevotionalModal}
+                  >
+                    Cancel
+                  </button>
+                  <button type="submit" className="btn btn-primary">
+                    {devotionalToEdit ? 'Save' : 'Create'}
                   </button>
                 </div>
               </form>

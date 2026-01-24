@@ -7,6 +7,8 @@ const eventRoutes = require("./routes/api/events");
 const registrationRoutes = require("./routes/api/registration");
 const adminRoutes = require("./routes/api/admin");
 const forumRoutes = require("./routes/api/forum");
+const devotionalRoutes = require("./routes/api/devotionals");
+
 const cors = require("cors");
 
 const app = express();
@@ -20,6 +22,7 @@ app.use("/api/events", eventRoutes);
 app.use("/api/registration", registrationRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/forum", forumRoutes);
+app.use("/api/devotionals", devotionalRoutes);
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 

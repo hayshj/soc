@@ -11,6 +11,7 @@ import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import Beliefs from './pages/Beliefs';
 import Forum from './pages/Forum';
+import Devotionals from './pages/Devotionals';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/beliefs" element={<Beliefs />} />
           <Route path="/forum" element={<Forum />} />
+          <Route path="/devotionals" element={<Devotionals />} />
           <Route path="/donate" element={<Donate />} />
           <Route path="/get-involved" element={<GetInvolved />} />
           <Route path='/events' element={<Events />}/>
