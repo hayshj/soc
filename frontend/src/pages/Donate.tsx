@@ -44,7 +44,7 @@ function Donate() {
             <div>
               <div className="org">SIGHTS ON CHRIST</div>
               <div>Make Checks Payable To: <strong>SIGHTS ON CHRIST</strong></div>
-              <div>PO 465</div>
+              <div>PO 205</div>
               <div>Royse City, TX 75189</div>
               <div className="note">Please write “Donation” in the memo line.</div>
             </div>

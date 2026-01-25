@@ -36,28 +36,12 @@ function About() {
       <PageHeader pageName="About Us" />
 
       <main className="about-container">
-        {/* Mission Statement */}
-        <section id="mission" className="section">
-          <div className="section-header">
-            <h2>Our Mission</h2>
-            <p className="kicker">Why we exist</p>
-          </div>
-
-          <div className="mission-card">
-            <blockquote>
-              To impact youth lives, by spreading the gospel, while experiencing the great outdoors.
-            </blockquote>
-            <p className="mission-body">
-              Through guided expeditions, campout gatherings, and outdoor stewardship, we foster enviornments where faith is strengthened, character is built, and lifelong memories are made in the silence of the woods and the community of campfire.
-            </p>
-          </div>
-        </section>
 
         {/* Board Members */}
         <section id="board" className="section">
           <div className="section-header">
             <h2>Board of Directors</h2>
-            <p className="kicker">Leadership & stewardship</p>
+            <p className="kicker">Leadership & Stewardship</p>
           </div>
 
           <div className="board-grid">
