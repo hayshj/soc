@@ -26,15 +26,6 @@ const BOARD: BoardMember[] = [
   { name: 'Kollin Padon', role: 'Secretary', photo: KP, bio: 'Kollin Padon was born in Dallas, Texas, and raised in Royse City, where he developed a strong foundation in faith, family, and hard work. He attended Eastfield College and Texas A&M University-Commerce, where he pursued his education while working toward becoming a licensed Journeyman Electrician. With over 10 years of experience in the construction industry, Kollin now works at GoVisionXP, where he manages fixed installations of cutting-edge LED screen technology. His career reflects a deep commitment to quality, leadership, and innovation in the field. Kollin is an active member and Deacon at Fellowship Church, where he serves faithfully in both the Youth and Men’s Ministries. He has also dedicated three years as a Trail Life Chairman, mentoring young men in character and leadership. Outside of work and ministry, Kollin enjoys the outdoors with his wife, Monica Padon, and their three daughters—Hailey, Adleigh, and Kinsley. Whether it’s fishing, swimming, playing sports, exploring, or their favorite—waterfowl hunting—the Padons make the most of every adventure together. Kollin also proudly supports the local high school football team on Friday nights, reflecting his heart for community and service. Kollin has been a part of Sights on Christ for 3 years pouring into both students and mentors who have a tug towards sharing the Gospel in the outdoors.' },
 ];
 
-function getInitials(fullName: string) {
-  return fullName
-    .split(' ')
-    .filter(Boolean)
-    .map((p) => p[0]?.toUpperCase())
-    .slice(0, 2)
-    .join('');
-}
-
 function About() {
   return (
     <>
