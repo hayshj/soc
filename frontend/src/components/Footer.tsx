@@ -34,7 +34,7 @@ function Footer() {
         <div className="footer-group">
           <h3>Contact</h3>
           <span>Sights on Christ</span>
-          <span>PO 465</span>
+          <span>PO 205</span>
           <span>Royse City, TX 75189</span>
         </div>
       </div>

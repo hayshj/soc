@@ -1,88 +1,114 @@
 /* Root utilities */
 :root {
-    --brand: #f59520;
-    --bg: #ffffff;
-    --ink: #0f172a;
-    --muted: #6b7280;
-    --surface: #ffffff;
-    --ring: rgba(245, 149, 32, 0.25);
-  }
-  
-  /* Layout */
-  .about-container {
-    width: min(var(--page-width), var(--page-max-width));
-    margin: 0 auto;
-    padding: clamp(6px, 1.5vw, 12px) 0 96px;
-    color: var(--ink);
-  }
-  
-  /* Shared section styling */
-  .section {
-    margin-top: 48px;
-  }
-  
-  .section-header {
-    margin-bottom: 20px;
-  }
-  
-  .section-header h2 {
-    font-size: clamp(1.5rem, 2.2vw, 2rem);
-    font-weight: 800;
-    letter-spacing: 0.2px;
-    margin: 0 0 4px 0;
-  }
-  
-  .kicker {
-    color: var(--muted);
-    font-size: 0.95rem;
-    margin: 0;
-  }
-  
-  /* Mission card */
-  .mission-card {
-    background: linear-gradient(180deg, rgba(245,149,32,0.07), rgba(245,149,32,0.03));
-    border: 1px solid rgba(245,149,32,0.18);
-    border-radius: 16px;
-    padding: clamp(16px, 3vw, 28px);
-    box-shadow: 0 8px 24px rgba(17, 24, 39, 0.08);
-  }
-  
-  .mission-card blockquote {
-    margin: 0 0 10px 0;
-    font-size: clamp(1.125rem, 2.4vw, 1.35rem);
-    line-height: 1.6;
-    font-weight: 700;
-  }
-  
-  .mission-body {
-    margin: 0;
-    color: var(--muted);
-    line-height: 1.7;
-  }
-  
-  /* Board grid */
-  .board-grid {
-    grid-template-columns: 1fr !important;
-  }
-  
+  --brand: #f59520;
+  --bg: #ffffff;
+  --ink: #0f172a;
+  --muted: #6b7280;
+  --surface: #ffffff;
+  --ring: rgba(245, 149, 32, 0.25);
+}
+
+/* Layout */
+.about-container {
+  width: min(var(--page-width), var(--page-max-width));
+  margin: 0 auto;
+  padding: clamp(6px, 1.5vw, 12px) 0 96px;
+  color: var(--ink);
+}
+
+/* Shared section styling */
+.section {
+  margin-top: 48px;
+}
+
+.section-header {
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  margin: 0 0 4px 0;
+}
+
+.kicker {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* Mission card */
+.mission-card {
+  background: linear-gradient(
+    180deg,
+    rgba(245, 149, 32, 0.07),
+    rgba(245, 149, 32, 0.03)
+  );
+  border: 1px solid rgba(245, 149, 32, 0.18);
+  border-radius: 16px;
+  padding: clamp(16px, 3vw, 28px);
+  box-shadow: 0 8px 24px rgba(17, 24, 39, 0.08);
+}
+
+.mission-card blockquote {
+  margin: 0 0 10px 0;
+  font-size: clamp(1.125rem, 2.4vw, 1.35rem);
+  line-height: 1.6;
+  font-weight: 700;
+}
+
+.mission-body {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* Board grid */
+.board-grid {
+  grid-template-columns: 1fr !important;
+}
+
+.member-card {
+  grid-column: span 6;
+  background: var(--surface);
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  border-radius: 16px;
+  padding: clamp(20px, 3vw, 28px);
+  box-shadow: 0 8px 24px rgba(17, 24, 39, 0.06);
+  display: grid;
+
+  /* Base layout (works well on mobile / narrower widths) */
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "avatar meta"
+    "bio bio";
+  column-gap: 14px;
+  row-gap: 8px;
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+/* Desktop override:
+   left column = photo + meta, right column = bio */
+@media (min-width: 900px) {
   .member-card {
-    grid-column: span 6;
-    background: var(--surface);
-    border: 1px solid rgba(15, 23, 42, 0.06);
-    border-radius: 16px;
-    padding: 18px;
-    box-shadow: 0 8px 24px rgba(17, 24, 39, 0.06);
-    display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: minmax(220px, 280px) 1fr;
     grid-template-areas:
-      "avatar meta"
-      "bio bio";
-    column-gap: 14px;
-    row-gap: 8px;
-    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-    padding: clamp(20px, 3vw, 28px);
+      "avatar bio"
+      "meta   bio";
+    align-items: start;
+    column-gap: 24px;
+    row-gap: 12px;
   }
-  
+
+  .member-bio {
+    margin: 0;
+  }
+}
+
+/* Avatar / photo */
 .member-photo {
   grid-area: avatar;
   width: 58px;
@@ -93,8 +119,13 @@
   font-weight: 800;
   font-size: 1.05rem;
   color: #1f2937;
-  background: radial-gradient(120% 120% at 20% 0%, #fff 10%, rgba(245,149,32,0.2) 60%, rgba(245,149,32,0.35) 100%);
-  border: 1px solid rgba(245,149,32,0.25);
+  background: radial-gradient(
+    120% 120% at 20% 0%,
+    #fff 10%,
+    rgba(245, 149, 32, 0.2) 60%,
+    rgba(245, 149, 32, 0.35) 100%
+  );
+  border: 1px solid rgba(245, 149, 32, 0.25);
   overflow: hidden;
 }
 
@@ -112,59 +143,96 @@
   height: 100%;
 }
 
-  .member-meta {
-    grid-area: meta;
-    align-self: center;
+.member-meta {
+  grid-area: meta;
+  align-self: center;
+}
+
+.member-name {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.member-role {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--brand);
+  background: rgba(245, 149, 32, 0.12);
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 149, 32, 0.25);
+}
+
+.member-bio {
+  grid-area: bio;
+  margin: 8px 0 2px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* If you're using a rectangular image block anywhere */
+.member-image {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 16px;
+  margin-bottom: 1rem;
+  background: #f3f4f6;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+  position: relative;
+}
+
+.member-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0));
+  pointer-events: none;
+}
+
+.member-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.02);
+  transition: transform 0.35s ease;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .member-card {
+    grid-column: span 12;
   }
-  
-  .member-name {
-    margin: 0;
-    font-size: 1.05rem;
-    font-weight: 800;
-    letter-spacing: 0.2px;
+}
+
+@media (max-width: 560px) {
+  .about-container {
+    padding: clamp(6px, 1.5vw, 12px) 0 80px;
   }
-  
-  .member-role {
-    display: inline-block;
-    margin-top: 4px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--brand);
-    background: rgba(245,149,32,0.12);
-    padding: 4px 10px;
-    border-radius: 999px;
-    border: 1px solid rgba(245,149,32,0.25);
+
+  .member-card {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "avatar"
+      "meta"
+      "bio";
   }
-  
-  .member-bio {
-    grid-area: bio;
-    margin: 8px 0 2px;
-    color: var(--muted);
-    line-height: 1.6;
+
+  .member-photo {
+    margin: 0 auto 8px;
+    width: 60px;
+    height: 60px;
   }
-  
-  /* Responsive */
-  @media (max-width: 900px) {
-    .member-card { grid-column: span 12; }
+}
+
+/* Motion reduce */
+@media (prefers-reduced-motion: reduce) {
+  .member-card {
+    transition: none;
   }
-  
-  @media (max-width: 560px) {
-    .about-container { padding: clamp(6px, 1.5vw, 12px) 0 80px; }
-    .member-card {
-      grid-template-columns: 1fr;
-      grid-template-areas:
-        "avatar"
-        "meta"
-        "bio";
-    }
-    .member-photo {
-      margin: 0 auto 8px;
-      width: 60px; height: 60px;
-    }
-  }
-  
-  /* Motion reduce */
-  @media (prefers-reduced-motion: reduce) {
-    .member-card { transition: none; }
-  }
-  
+}
